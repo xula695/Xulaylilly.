@@ -5,52 +5,98 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>بۆ تاقە تاقانەکەم ❤️</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body {
-            background: linear-gradient(135deg, #ffe5ec, #ffc2d1);
+            background-color: #0b0105;
+            overflow: hidden;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            text-align: center;
-            direction: rtl;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
-            overflow: hidden;
+            position: relative;
         }
-        .card {
-            background: rgba(255, 255, 255, 0.9);
+        /* کینڤاس بۆ بارانی نووسین و گوڵەکان */
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        /* کارتە ڕۆمانسییەکەی ناوەڕاست */
+        .love-card {
+            position: relative;
+            z-index: 2;
+            background: rgba(255, 230, 238, 0.85);
+            backdrop-filter: blur(8px);
             padding: 40px 30px;
             border-radius: 25px;
-            box-shadow: 0px 10px 30px rgba(0,0,0,0.1);
-            max-width: 400px;
+            border: 2px solid #ff4d6d;
+            box-shadow: 0px 0px 25px rgba(255, 77, 109, 0.4);
+            text-align: center;
+            max-width: 450px;
             width: 85%;
-            animation: fadeIn 2s ease-in-out;
+            direction: rtl;
+            animation: float 4s ease-in-out infinite;
         }
-        h1 { color: #ff4d6d; font-size: 28px; margin-bottom: 20px; }
-        p { color: #4a4a4a; font-size: 18px; line-height: 1.8; margin: 10px 0; }
-        .heart { 
-            font-size: 60px; 
-            color: #ff4d6d; 
-            animation: beat 0.8s infinite alternate; 
+        .heart-icon {
+            font-size: 55px;
+            color: #ff4d6d;
+            margin-bottom: 15px;
+            animation: pulse 1s infinite alternate;
+        }
+        h1 {
+            color: #ff4d6d;
+            font-size: 26px;
             margin-bottom: 15px;
         }
-        @keyframes beat {
-            to { transform: scale(1.25); }
+        p {
+            color: #3a0ca3;
+            font-size: 20px;
+            line-height: 1.8;
+            font-weight: bold;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* ئەنیمەیشنی جوڵانی کارتەکە */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        /* ئەنیمەیشنی لێدانی دڵەکە */
+        @keyframes pulse {
+            to { transform: scale(1.15); }
         }
     </style>
 </head>
 <body>
 
-<div class="card">
-    <div class="heart">❤️</div>
-    <h1>بۆ ئامێزی ئارامیم...</h1>
-    <p>تۆ جوانترین و پڕ بەهاترین دیاری چاره‌نووسیت لە ژیانی مندا.</p>
-    <p>هەرگیز لە بیرت نەچێت کە چەندە خۆشم دەوێیت! ✨</p>
-</div>
+    <canvas id="loveCanvas"></canvas>
 
-</body>
-</html>
+    <div class="love-card">
+        <div class="heart-icon">❤️</div>
+        <h1>بۆ شاژنی دڵم...</h1>
+        <p>«لەنێوان تەواوی دونیادا، دڵی من تۆی هەڵبژارد؛ لیلی تاقە دڵ و بەنرخترین دیاری ژیانی خولایە.» ✨</p>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('loveCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // ڕێکخستنی قەبارەی شاشە
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // وشە و بابەتەکانی بارانەکە
+        const words = ["خۆشمدەوێی", "❤️", "🌹", "خۆشم دەوێی"];
+        const fontSize = 16;
+        const columns = Math.floor(canvas.width / 35); //
+        
